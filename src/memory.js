@@ -5,8 +5,11 @@ class MemoryGame {
     this.pickedCards = [];
     this.pairsClicked = 0;
     this.pairsGuessed = 0;
+    this.gameTimer = 0;
   }
-
+  timerCount() {
+    this.gameTimer += 1;
+  }
   shuffleCards() {
     // ... write your code here
     if (!this.cards) return undefined;

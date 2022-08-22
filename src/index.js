@@ -24,7 +24,6 @@ const cards = [
   { name: "the avengers", img: "the-avengers.jpg" },
   { name: "thor", img: "thor.jpg" },
 ];
-
 const memoryGame = new MemoryGame(cards),
   //*Variables and Methods for togglingState of selected cards.
   cache = [],
@@ -34,7 +33,15 @@ const memoryGame = new MemoryGame(cards),
     cache[1].classList.remove("turned");
     cache.splice(0, 2);
   };
+
 window.addEventListener("load", (event) => {
+  //* Initialize gameTimerMachine onLoad
+  const gameTimeEl = document.getElementById("timer"),
+    gameTimer = setInterval(() => {
+      memoryGame.timerCount();
+      gameTimeEl.innerText = memoryGame.gameTimer;
+    }, 1000);
+
   //* Shuffle the cards when the Webpage loads:
   memoryGame.shuffleCards();
   let html = "";
@@ -51,8 +58,7 @@ window.addEventListener("load", (event) => {
   // Bind the click event of each element to a function
   document.querySelectorAll(".card").forEach((card) => {
     card.addEventListener("click", () => {
-      // TODO: write some code here
-      //*Turn the clicked card=>
+      // TODO: ¯\_(ツ)_/¯
       card.classList.toggle("turned");
       cache.push(card);
       //*Push clicked card into memoryGame.pickedCards Arraay.
@@ -71,7 +77,11 @@ window.addEventListener("load", (event) => {
         document.querySelector("#pairs-guessed").innerText =
           memoryGame.pairsGuessed;
         if (memoryGame.checkIfFinished()) {
-          alert("You win!");
+          clearInterval(gameTimer);
+          // TODO Make something more than an ending with an simple alert:
+          alert(
+            `You won in ${memoryGame.gameTimer} seconds with ${memoryGame.pairsClicked} try's`
+          );
         }
       }
     });
